@@ -8,10 +8,22 @@ import {
   incrementIfOdd,
   selectCount,
 } from './counterSlice';
+
+
+import {
+  fetchPopular,
+  fetchDummy,
+  selectPopularPosts,
+  selectLoading
+} from '../popular/popularSlice'
+
 import styles from './Counter.module.css';
 
 export function Counter() {
   const count = useSelector(selectCount);
+  const popularPosts = useSelector(selectPopularPosts);
+  console.log(popularPosts)
+  const loading = useSelector(selectLoading)
   const dispatch = useDispatch();
   const [incrementAmount, setIncrementAmount] = useState('2');
 
@@ -20,46 +32,31 @@ export function Counter() {
   return (
     <div>
       <div className={styles.row}>
-        <button
-          className={styles.button}
-          aria-label="Decrement value"
-          onClick={() => dispatch(decrement())}
-        >
-          -
-        </button>
-        <span className={styles.value}>{count}</span>
-        <button
-          className={styles.button}
-          aria-label="Increment value"
-          onClick={() => dispatch(increment())}
-        >
-          +
-        </button>
+        <div>
+          {loading && (
+            <p>LOADING</p>
+          )}
+          {Object.keys(popularPosts).length > 0 && (
+            <ul>
+              {Object.values(popularPosts).map((post) => (
+                <li>{post.title}</li>
+              ))}
+            </ul>
+          )}
+        </div>
       </div>
       <div className={styles.row}>
-        <input
-          className={styles.textbox}
-          aria-label="Set increment amount"
-          value={incrementAmount}
-          onChange={(e) => setIncrementAmount(e.target.value)}
-        />
         <button
-          className={styles.button}
-          onClick={() => dispatch(incrementByAmount(incrementValue))}
+          className={styles.asyncButton}
+          onClick={() => dispatch(fetchDummy())}
         >
-          Add Amount
+          fetch dummy data
         </button>
         <button
           className={styles.asyncButton}
-          onClick={() => dispatch(incrementAsync(incrementValue))}
+          onClick={() => dispatch(fetchPopular())}
         >
-          Add Async
-        </button>
-        <button
-          className={styles.button}
-          onClick={() => dispatch(incrementIfOdd(incrementValue))}
-        >
-          Add If Odd
+          Fetch Reddit Popular Posts
         </button>
       </div>
     </div>
