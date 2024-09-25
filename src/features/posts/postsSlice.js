@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { fetchPosts, fetchDummyJson } from '../../api/redditAPI';
+import { fetchPostsBySubreddit} from '../../api/redditAPI';
 
 // The function below is called a thunk and allows us to perform async logic. It
 // can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This
@@ -9,20 +9,12 @@ import { fetchPosts, fetchDummyJson } from '../../api/redditAPI';
 export const fetchSubPosts = createAsyncThunk(
     'posts/fetchPosts',
     async (subreddit) => {
-        const response = await fetchPosts(subreddit);
+        const response = await fetchPostsBySubreddit(subreddit);
         // The value we return becomes the `fulfilled` action payload
         return response;
     }
 );
 
-export const fetchDummy = createAsyncThunk(
-    'posts/fetchDummy',
-    async () => {
-        const response = await fetchDummyJson();
-        // The value we return becomes the `fulfilled` action payload
-        return response;
-    }
-);
 
 export const postsSlice = createSlice({
     name: 'posts',
@@ -61,19 +53,6 @@ export const postsSlice = createSlice({
                 })
             })
             .addCase(fetchSubPosts.rejected, (state) => {
-                state.loading = false
-                state.error = true
-                state.data = {}
-            })
-            .addCase(fetchDummy.pending, (state) => {
-                state.loading = true;
-                state.error = false;
-            })
-            .addCase(fetchDummy.fulfilled, (state, action) => {
-                state.loading = false;
-                state.data = action.payload;
-            })
-            .addCase(fetchDummy.rejected, (state) => {
                 state.loading = false
                 state.error = true
                 state.data = {}
