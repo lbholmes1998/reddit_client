@@ -37,16 +37,12 @@ export const subredditsSlice = createSlice({
                 state.loading = false;
                 const subreddits = action.payload // array of objects keyed by a number
                 subreddits.map((subreddit) => {
-                    const {id, title, thumbnail, preview, author, ups, num_comments, subreddit_name_prefixed} = subreddit.data
+                    const {id, title, url, icon_img} = subreddit.data
                     state.subreddits[id] = {
                         id: id,
                         title: title,
-                        author: author,
-                        preview: preview,
-                        thumbnail: thumbnail,
-                        upvotes: ups,
-                        comments: num_comments,
-                        subreddit: subreddit_name_prefixed
+                        url: url.slice(0, -1), // Remove trailing '/'
+                        icon: icon_img // TODO - replace any missing icons with default reddit icon
                     }
                 })
             })

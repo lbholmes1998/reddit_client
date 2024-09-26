@@ -38,7 +38,8 @@ export default function Subreddits() {
                             key={subreddit.id}
                             className="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow"
                         >
-                            <p>{subreddit.title}</p>
+                            <img alt="" src={subreddit.icon} className="mx-auto h-12 w-12 flex-shrink-0" />
+                            <p>{subreddit.url}</p>
                         </li>
                     ))}
                 </ul>
