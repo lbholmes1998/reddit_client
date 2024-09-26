@@ -1,6 +1,7 @@
 import React from 'react';
 import { Counter } from '../features/counter/Counter';
 import Posts from '../features/posts/Posts';
+import Subreddits from '../features/subreddits/Subreddits';
 import './App.css';
 
 function App() {
@@ -8,6 +9,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <Posts />
+        <Subreddits />
       </header>
     </div>
   );
