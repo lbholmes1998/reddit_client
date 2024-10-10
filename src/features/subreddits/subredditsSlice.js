@@ -37,12 +37,15 @@ export const subredditsSlice = createSlice({
                 state.loading = false;
                 const subreddits = action.payload // array of objects keyed by a number
                 subreddits.map((subreddit) => {
-                    const {id, title, url, icon_img} = subreddit.data
+                    const {id, title, url} = subreddit.data
+
+                    let img = !subreddit.data.icon_img ? "../../icons/reddit_default.png" : subreddit.data.icon_img
+                         
                     state.subreddits[id] = {
                         id: id,
                         title: title,
                         url: url.slice(0, -1), // Remove trailing '/'
-                        icon: icon_img // TODO - replace any missing icons with default reddit icon
+                        icon: img // TODO - replace any missing icons with default reddit icon
                     }
                 })
             })
