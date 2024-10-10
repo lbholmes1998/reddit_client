@@ -1,35 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { HandThumbUpIcon, ChatBubbleLeftIcon } from '@heroicons/react/20/solid'
 import { useSelector, useDispatch } from 'react-redux';
 
 import {
     fetchSubPosts,
-    fetchDummy,
     selectPosts,
     selectLoading
 } from '../posts/postsSlice'
-
-import styles from '../counter/Counter.module.css';
-function classNames(...classes) {
-    return classes.filter(Boolean).join(' ')
-}
 
 export default function Posts() {
     // Show popular posts (or potentially others) in a feed-like display
 
     const posts = useSelector(selectPosts);
-    console.log(posts)
     const loading = useSelector(selectLoading)
     const dispatch = useDispatch();
 
+    useEffect(() => {
+        dispatch(fetchSubPosts('popular'))
+    }, [])  // TODO - Will eventually change to posts belonging to sub just navigated to
+
     return (
-        <div className="flow-root max-w-xl">
-            <button
-                className={styles.asyncButton}
-                onClick={() => dispatch(fetchSubPosts('popular'))}
-            >
-                Fetch Reddit Popular Posts
-            </button>
+        <div className="flow-root">
             {Object.keys(posts).length > 0 && (
                 <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1">
                     {Object.values(posts).map((post) => (
@@ -43,12 +34,6 @@ export default function Posts() {
                                 <dl className="mt-1 flex flex-grow flex-col justify-between">
                                     <dt className="sr-only">Author</dt>
                                     <dd className="text-sm text-gray-500">Posted by: {post.author}</dd>
-                                    {/* <dt className="sr-only">Author</dt>
-                                    <dd className="mt-3">
-                                        <span className="inline-flex items-center rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                                            {post.author}
-                                        </span>
-                                    </dd> */}
                                 </dl>
                             </div>
                             <div>
