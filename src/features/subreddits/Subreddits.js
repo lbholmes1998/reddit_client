@@ -19,15 +19,29 @@ import {
 import {
     getSubs,
     selectSubreddits,
-    selectLoading
+    selectLoading,
+    selectedSubreddit
 } from './subredditsSlice'
 
-export default function Subreddits() {
-    // Show popular subreddits
+import { fetchSubPosts } from '../posts/postsSlice';
 
+export default function Subreddits() {
+
+    // Show popular subreddits
     const subreddits = useSelector(selectSubreddits);
     const loading = useSelector(selectLoading)
     const dispatch = useDispatch();
+
+    const [sub, setSub] = useState('popular')
+
+    useEffect(() => {
+        dispatch(fetchSubPosts(sub))
+    }, [sub])
+
+    const handleSubSelect = (e) => {
+        let selected = e.target.innerText.split("/")[2]
+        setSub(selected)
+    }
 
     useEffect(() => {
         dispatch(getSubs())
@@ -38,7 +52,9 @@ export default function Subreddits() {
             {Object.values(subreddits).map((subreddit) => (
                 <SidebarItem key={subreddit.id}>
                     <img alt="Subreddit icon" src={subreddit.icon} className="mx-auto w-6 h-6"/>
-                    <SidebarLabel>{subreddit.url}</SidebarLabel>
+                    <SidebarLabel value={subreddit.url} onClick={(e) => handleSubSelect(e)}>
+                        {subreddit.url}
+                    </SidebarLabel>
                 </SidebarItem>
             ))}
         </div>

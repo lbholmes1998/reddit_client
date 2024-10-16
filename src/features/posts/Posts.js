@@ -3,24 +3,25 @@ import { HandThumbUpIcon, ChatBubbleLeftIcon } from '@heroicons/react/20/solid'
 import { useSelector, useDispatch } from 'react-redux';
 
 import {
-    fetchSubPosts,
+    selectSubName,
     selectPosts,
     selectLoading
 } from '../posts/postsSlice'
+
 
 export default function Posts() {
     // Show popular posts (or potentially others) in a feed-like display
 
     const posts = useSelector(selectPosts);
+    const current_sub = useSelector(selectSubName)
     const loading = useSelector(selectLoading)
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(fetchSubPosts('popular'))
-    }, [])  // TODO - Will eventually change to posts belonging to sub just navigated to
-
     return (
         <div className="flow-root">
+          <p className="my-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+            {current_sub}
+          </p>
             {Object.keys(posts).length > 0 && (
                 <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1">
                     {Object.values(posts).map((post) => (
