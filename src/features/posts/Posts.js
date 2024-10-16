@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { HandThumbUpIcon, ChatBubbleLeftIcon } from '@heroicons/react/20/solid'
 import { useSelector, useDispatch } from 'react-redux';
+import { Link, Outlet } from 'react-router-dom';
+import ROUTES from '../../app/routes';
 
 import {
     selectSubName,
@@ -19,9 +21,10 @@ export default function Posts() {
 
     return (
         <div className="flow-root">
-          <p className="my-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">
-            {current_sub}
-          </p>
+            <p className="my-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                {current_sub}
+            </p>
+
             {Object.keys(posts).length > 0 && (
                 <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1">
                     {Object.values(posts).map((post) => (
@@ -30,8 +33,8 @@ export default function Posts() {
                             className="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow"
                         >
                             <div className="flex flex-1 flex-col p-8">
-                                <img alt="" src={post.thumbnail} className="mx-auto h-32 w-32 flex-shrink-0" />
-                                <h3 className="mt-6 text-sm font-medium text-gray-900">{post.title}</h3>
+                                <img alt="" src={post.thumbnail} className="mx-auto h-32 w-32 flex-shrink-0"/>
+                                <Link to={ROUTES.viewPostRoute(post.id)} className="mt-6 text-sm font-medium text-gray-900">{post.title}</Link>
                                 <dl className="mt-1 flex flex-grow flex-col justify-between">
                                     <dt className="sr-only">Author</dt>
                                     <dd className="text-sm text-gray-500">Posted by: {post.author}</dd>
@@ -61,6 +64,7 @@ export default function Posts() {
                     ))}
                 </ul>
             )}
+            <Outlet />
 
         </div>
     )

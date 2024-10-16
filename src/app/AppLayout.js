@@ -15,8 +15,6 @@ import { Heading } from './components/heading';
 import {
     MagnifyingGlassIcon,
 } from '@heroicons/react/20/solid'
-import { useSelector, useDispatch } from 'react-redux';
-
 import Posts from '../features/posts/Posts';
 import Subreddits from '../features/subreddits/Subreddits';
 
