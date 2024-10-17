@@ -14,7 +14,7 @@ export const fetchSubPosts = createAsyncThunk(
 export const postsSlice = createSlice({
     name: 'posts',
     initialState: {
-        sub: '',
+        sub: 'Popular',
         posts: {},
         error: false,
         loading: false
@@ -32,7 +32,6 @@ export const postsSlice = createSlice({
                 state.posts = {} // clear existing posts before replacing with new ones.
                 posts.map((post) => {
                     const {id, title, thumbnail, preview, author, ups, num_comments, subreddit_name_prefixed} = post.data
-                    state.sub = subreddit_name_prefixed
                     state.posts[id] = {
                         id: id,
                         title: title,
@@ -49,6 +48,9 @@ export const postsSlice = createSlice({
                 state.loading = false
                 state.error = true
                 state.posts = {}
+            })
+            .addCase('subreddits/addSelectedSub', (state, action) => {
+                state.sub = action.payload
             })
     },
 });

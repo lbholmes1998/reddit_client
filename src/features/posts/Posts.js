@@ -5,6 +5,7 @@ import { Link, Outlet } from 'react-router-dom';
 import ROUTES from '../../app/routes';
 
 import {
+    fetchSubPosts,
     selectSubName,
     selectPosts,
     selectLoading
@@ -19,10 +20,14 @@ export default function Posts() {
     const loading = useSelector(selectLoading)
     const dispatch = useDispatch();
 
+    useEffect(() => {
+        dispatch(fetchSubPosts(current_sub))
+    }, [current_sub])
+
     return (
         <div className="flow-root">
             <p className="my-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                {current_sub}
+                r/{current_sub}
             </p>
 
             {Object.keys(posts).length > 0 && (
@@ -64,7 +69,7 @@ export default function Posts() {
                     ))}
                 </ul>
             )}
-            <Outlet />
+            {/* <Outlet /> */}
 
         </div>
     )

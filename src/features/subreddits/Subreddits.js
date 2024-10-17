@@ -4,26 +4,16 @@ import React, { useEffect, useState } from 'react';
 import { HandThumbUpIcon, ChatBubbleLeftIcon } from '@heroicons/react/20/solid'
 import { useSelector, useDispatch } from 'react-redux';
 import {
-    Sidebar,
-    SidebarBody,
-    SidebarDivider,
-    SidebarFooter,
-    SidebarHeader,
-    SidebarHeading,
     SidebarItem,
     SidebarLabel,
-    SidebarSection,
-    SidebarSpacer,
 } from '../../app/components/sidebar'
 
 import {
     getSubs,
     selectSubreddits,
     selectLoading,
-    selectedSubreddit
+    addSelectedSub
 } from './subredditsSlice'
-
-import { fetchSubPosts } from '../posts/postsSlice';
 
 export default function Subreddits() {
 
@@ -32,15 +22,10 @@ export default function Subreddits() {
     const loading = useSelector(selectLoading)
     const dispatch = useDispatch();
 
-    const [sub, setSub] = useState('popular')
-
-    useEffect(() => {
-        dispatch(fetchSubPosts(sub))
-    }, [sub])
-
     const handleSubSelect = (e) => {
-        let selected = e.target.innerText.split("/")[2]
-        setSub(selected)
+        let selected = e.target.innerText.replace('/r/', '').trim();
+        console.log(selected)
+        dispatch(addSelectedSub(selected))
     }
 
     useEffect(() => {
