@@ -30,7 +30,7 @@ export const postsSlice = createSlice({
                 state.loading = false;
                 const posts = action.payload // array of objects keyed by a number
                 state.posts = {} // clear existing posts before replacing with new ones.
-                posts.map((post) => {
+                posts.forEach((post) => {
                     const {id, title, thumbnail, preview, author, ups, num_comments, subreddit_name_prefixed} = post.data
                     state.posts[id] = {
                         id: id,
@@ -39,7 +39,7 @@ export const postsSlice = createSlice({
                         preview: preview,
                         thumbnail: thumbnail,
                         upvotes: ups,
-                        comments: num_comments,
+                        num_comments: num_comments,
                         subreddit: subreddit_name_prefixed
                     }
                 })
@@ -49,13 +49,14 @@ export const postsSlice = createSlice({
                 state.error = true
                 state.posts = {}
             })
-            .addCase('subreddits/addSelectedSub', (state, action) => {
+            .addCase('subreddits/setSelectedSub', (state, action) => {
                 state.sub = action.payload
             })
     },
 });
 
 export const { } = postsSlice.actions;
+export const selectPostById = (id) => (state) => state.posts.posts[id]
 export const selectPosts = (state) => state.posts.posts;
 export const selectSubName = (state) => state.posts.sub;
 export const selectLoading = (state) => state.posts.loading;

@@ -17,6 +17,7 @@ import {
 } from '@heroicons/react/20/solid'
 import Posts from '../features/posts/Posts';
 import Subreddits from '../features/subreddits/Subreddits';
+import SearchBar from './components/searchBar';
 
 export default function AppLayout() {
     return (
@@ -32,10 +33,7 @@ export default function AppLayout() {
                         <SidebarDivider />
 
                         <SidebarSection className="max-lg:hidden">
-                            <SidebarItem href="/search">
-                                <MagnifyingGlassIcon />
-                                <SidebarLabel>Search</SidebarLabel>
-                            </SidebarItem>
+                            <SearchBar />
                         </SidebarSection>
                     </SidebarHeader>
                     <SidebarBody>

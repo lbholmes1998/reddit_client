@@ -24,7 +24,7 @@ export const subredditsSlice = createSlice({
     },
     // The `reducers` field lets us define reducers and generate associated actions
     reducers: {
-        addSelectedSub(state, action) {
+        setSelectedSub(state, action) {
             state.selected = action.payload
         }
     },
@@ -64,7 +64,7 @@ export const subredditsSlice = createSlice({
     },
 });
 
-export const {addSelectedSub} = subredditsSlice.actions;
+export const {setSelectedSub} = subredditsSlice.actions;
 
 export const selectSubreddits = (state) => state.subreddits.subreddits;
 export const selectSubById = (id) => (state) => state.subreddits.subreddits[id]

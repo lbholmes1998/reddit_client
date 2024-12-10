@@ -12,7 +12,7 @@ import {
     getSubs,
     selectSubreddits,
     selectLoading,
-    addSelectedSub
+    setSelectedSub
 } from './subredditsSlice'
 
 export default function Subreddits() {
@@ -25,7 +25,7 @@ export default function Subreddits() {
     const handleSubSelect = (e) => {
         let selected = e.target.innerText.replace('/r/', '').trim();
         console.log(selected)
-        dispatch(addSelectedSub(selected))
+        dispatch(setSelectedSub(selected))
     }
 
     useEffect(() => {
